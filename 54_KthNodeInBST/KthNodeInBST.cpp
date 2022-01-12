@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题54：二叉搜索树的第k个结点
+// 54：二叉搜索树的第k个结点
 // 题目：给定一棵二叉搜索树，请找出其中的第k大的结点。
 
 #include <cstdio>

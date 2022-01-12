@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题2：实现Singleton模式
+// 2：实现Singleton模式
 // 题目：设计一个类，我们只能生成该类的一个实例。
 
 using System;

@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题1：赋值运算符函数
+// 1：赋值运算符函数
 // 题目：如下为类型CMyString的声明，请为该类型添加赋值运算符函数。
 
 #include<cstring>

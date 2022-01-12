@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题37：序列化二叉树
+// 37：序列化二叉树
 // 题目：请实现两个函数，分别用来序列化和反序列化二叉树。
 
 #include <cstdio>

@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题29：顺时针打印矩阵
+// 29：顺时针打印矩阵
 // 题目：输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
 
 #include <cstdio>
@@ -26,7 +26,7 @@ void PrintMatrixClockwisely(int** numbers, int columns, int rows)
         return;
 
     int start = 0;
-
+	// 圈数以行或列的最小值为基准 [1/12/2022 wzq]
     while(columns > start * 2 && rows > start * 2)
     {
         PrintMatrixInCircle(numbers, columns, rows, start);

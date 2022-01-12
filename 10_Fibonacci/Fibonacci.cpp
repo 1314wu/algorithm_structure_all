@@ -12,7 +12,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 
 //==================================================================
 
-// 面试题10：斐波那契数列
+// 10：斐波那契数列
 // 题目：写一个函数，输入n，求斐波那契（Fibonacci）数列的第n项。
 
 #include <cstdio>
