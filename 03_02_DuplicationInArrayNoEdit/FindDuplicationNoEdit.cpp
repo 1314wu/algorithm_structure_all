@@ -62,7 +62,7 @@ int countRange(const int* numbers, int length, int start, int end)
 
     int count = 0;
     for(int i = 0; i < length; i++)
-        if(numbers[i] >= start && numbers[i] <= end)
+        if(numbers[i] >= start && numbers[i] <= end)// 统计[start,end]范围内的数字个数 [1/12/2022 wzq]
             ++count;
     return count;
 }

@@ -89,6 +89,9 @@ int getMaxValue_solution2(const int* values, int rows, int cols)
 // ====================≤‚ ‘¥˙¬Î====================
 void test(const char* testName, const int* values, int rows, int cols, int expected)
 {
+	uint8_t  result[16];
+	uint64_t* totalFrames = (uint64_t*)(&result[16 - sizeof(uint64_t)/sizeof(uint8_t)]);
+	*totalFrames = 1314256250250250;
     if(getMaxValue_solution1(values, rows, cols) == expected)
         std::cout << testName << ": solution1 passed." << std::endl;
     else
