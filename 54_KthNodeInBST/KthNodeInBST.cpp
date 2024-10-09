@@ -34,7 +34,7 @@ const BinaryTreeNode* KthNodeCore(const BinaryTreeNode* pRoot, unsigned int& k)
 
     if(pRoot->m_pLeft != nullptr)
         target = KthNodeCore(pRoot->m_pLeft, k);
-
+    printf("%d ", pRoot->m_nValue);
     if(target == nullptr)
     {
         if(k == 1)

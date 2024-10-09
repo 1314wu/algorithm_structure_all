@@ -18,7 +18,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 习惯上我们把1当做第一个丑数。
 
 #include <cstdio>
-
+#include <iostream>
 // ====================算法1的代码====================
 bool IsUgly(int number)
 {
@@ -80,7 +80,9 @@ int GetUglyNumber_Solution2(int index)
 
         ++nextUglyIndex;
     }
-
+    for (int i = 0; i < index; i++) {
+        std::cout << pUglyNumbers[i] << "\t";
+    }
     int ugly = pUglyNumbers[nextUglyIndex - 1];
     delete[] pUglyNumbers;
     return ugly;
@@ -110,16 +112,16 @@ void Test(int index, int expected)
 
 int main(int argc, char* argv[])
 {
-    Test(1, 1);
+    //Test(1, 1);
 
-    Test(2, 2);
-    Test(3, 3);
-    Test(4, 4);
-    Test(5, 5);
-    Test(6, 6);
-    Test(7, 8);
-    Test(8, 9);
-    Test(9, 10);
+    //Test(2, 2);
+    //Test(3, 3);
+    //Test(4, 4);
+    //Test(5, 5);
+    //Test(6, 6);
+    //Test(7, 8);
+    //Test(8, 9);
+    //Test(9, 10);
     Test(10, 12);
     Test(11, 15);
 

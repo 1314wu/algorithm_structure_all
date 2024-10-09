@@ -8,36 +8,52 @@ void swap(int *a, int *b) {
 }
 
 void max_heapify(int arr[], int start, int end) {
-	// 建立父節點指標和子節點指標
+
 	int dad = start;
 	int son = dad * 2 + 1;
-	while (son <= end) { // 若子節點指標在範圍內才做比較
-		if (son + 1 <= end && arr[son] < arr[son + 1]) // 先比較兩個子節點大小，選擇最大的
+	
+	for (son = dad * 2 + 1; son <= end; son = son * 2 +1) {
+		if (son + 1 <= end && arr[son] < arr[son + 1])
 			son++;
-		if (arr[dad] > arr[son]) //如果父節點大於子節點代表調整完畢，直接跳出函數
+		if (arr[dad] > arr[son])
 			return;
-		else { // 否則交換父子內容再繼續子節點和孫節點比較
+		else {
+			// 子结点值比父结点值大，进行调整
 			swap(&arr[dad], &arr[son]);
-			dad = son;
-			son = dad * 2 + 1;
+			dad = son; //交换值后，再判断子结点的值与其下层子结点大小
 		}
 	}
-}
 
+	//for (int i = start; i < end; i++)
+	//	printf("%d ", arr[i]);
+	//printf("\n");
+
+}
+void output_info(int arr[], int len) {
+	for (int i = 0; i < len; i++)
+		printf("%d ", arr[i]);
+	printf("\n");
+}
 void heap_sort(int arr[], int len) {
 	int i;
-	// 初始化，i從最後一個父節點開始調整
+	// 建立堆，非叶子结点之前的都是未调整堆，叶子结点都是堆
 	for (i = len / 2 - 1; i >= 0; i--)
 		max_heapify(arr, i, len - 1);
-	// 先將第一個元素和已排好元素前一位做交換，再重新調整，直到排序完畢
+	// 上述步骤后，已经建立了一个大根堆，堆顶的元素是所有中的最大值
+
+	
+	// 先将堆顶[0]最大值放入最后。再用最后一个节点调整堆，使调整后的堆是大根堆
 	for (i = len - 1; i > 0; i--) {
 		swap(&arr[0], &arr[i]);
 		max_heapify(arr, 0, i - 1);
+		printf("%d\n", i);
+		output_info(arr, len);
 	}
 }
 
 int main() {
-	int arr[] = { 3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6 };
+	//int arr[] = { 3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6 };
+	int arr[] = { 49,38,65,97,76,13,27,49 };
 	int len = (int) sizeof(arr) / sizeof(*arr);
 	heap_sort(arr, len);
 	int i;

@@ -25,6 +25,24 @@ using namespace std;
 
 int GetTranslationCount(const string& number);
 
+
+int backtrack(string& s, int i) {
+    int n = s.size();
+    if (i == n) return 1;
+    if (i == n - 1 || s[i] == '0' || s.substr(i, 2) > "25")
+        return backtrack(s, i + 1);
+    return backtrack(s, i + 1) + backtrack(s, i + 2);
+}
+int GetTranslationCount_2(int num) {
+    if (num < 0) {
+        return 0;
+    }
+    string s = to_string(num);
+    int sum = backtrack(s, 0);
+    return sum;
+}
+
+
 int GetTranslationCount(int number)
 {
     if(number < 0)
@@ -75,9 +93,13 @@ int GetTranslationCount(const string& number)
 void Test(const string& testName, int number, int expected)
 {
     if(GetTranslationCount(number) == expected)
-        cout << testName << " passed." << endl;
+        cout << testName << " 1 passed." << endl;
     else
-        cout << testName << " FAILED." << endl;
+        cout << testName << " 1 FAILED." << endl;
+    if (GetTranslationCount_2(number) == expected)
+        cout << testName << " 2 passed." << endl;
+    else
+        cout << testName << " 2 FAILED." << endl;
 }
 
 void Test1()
@@ -142,7 +164,12 @@ void Test9()
     int expected = 0;
     Test("Test9", number, expected);
 }
-
+void Test10()
+{
+    int number = 12221;
+    int expected = 8;
+    Test("Test8", number, expected);
+}
 int main(int argc, char* argv[])
 {
     Test1();
@@ -154,6 +181,7 @@ int main(int argc, char* argv[])
     Test7();
     Test8();
     Test9();
+    Test10();
 
     return 0;
 }

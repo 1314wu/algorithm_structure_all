@@ -96,6 +96,43 @@ int longestSubstringWithoutDuplication_2(const std::string& str)
     return maxLength;
 }
 
+// 方法三(wzq)：动态规划 最原始的f(n) = f(n-1)+1形式
+int longestSubstringWithoutDuplication_3(const std::string& str)
+{
+  
+    int maxLength = 0;    
+    int* len = new int[str.length()];
+    for (int i = 0; i < str.length(); i++)
+        len[i] = 1;
+    int* position = new int[26];
+    for (int i = 0; i < 26; ++i)
+        position[i] = -1;
+
+    position[str[0] - 'a'] = 0;
+    for (int i = 1; i < str.length(); ++i)
+    {
+        int prevIndex = position[str[i] - 'a'];
+        if (prevIndex < 0 || i - prevIndex > len[i-1])
+            len[i]=len[i-1]+1;
+        else
+        {
+            if (len[i-1] > maxLength)
+                maxLength = len[i-1];
+
+            len[i] = i - prevIndex;
+        }
+        position[str[i] - 'a'] = i;
+    }
+    for (int i = 0; i < str.length(); i++) {
+        if (len[i] > maxLength)
+            maxLength = len[i];
+    }
+ 
+
+    delete[] position;
+    delete[] len;
+    return maxLength;
+}
 // ====================测试代码====================
 void testSolution1(const std::string& input, int expected)
 {
@@ -114,11 +151,22 @@ void testSolution2(const std::string& input, int expected)
     else
         std::cout << "Solution 2 FAILED, with input: " << input << std::endl;
 }
-
+void testSolution3(const std::string& input, int expected)
+{
+    int output = longestSubstringWithoutDuplication_3(input);
+    if (output == expected)
+        std::cout << "Solution 3 passed, with input: " << input << std::endl;
+    else
+        std::cout << "Solution 3 FAILED, with input: " << input << std::endl;
+}
 void test(const std::string& input, int expected)
 {
     testSolution1(input, expected);
     testSolution2(input, expected);
+    testSolution3(input, expected);
+    std::cout << "\n";
+
+
 }
 
 void test1()

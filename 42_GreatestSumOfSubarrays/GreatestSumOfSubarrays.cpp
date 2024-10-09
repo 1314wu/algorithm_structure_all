@@ -17,9 +17,50 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 数组成一个子数组。求所有子数组的和的最大值。要求时间复杂度为O(n)。
 
 #include <cstdio>
-
+#include <iostream>
+#include <algorithm>
 bool g_InvalidInput = false;
 
+//int FindGreateSumOfSubArray_2(int* pData, int nLength, int i) {
+//    if ((pData == nullptr) || (nLength <= 0))
+//    {
+//        g_InvalidInput = true;
+//        return 0;
+//    }
+//    for (int j = i; j >=0 ; j--) {
+//        if (j == 0) {
+//            return pData[0];
+//        }
+//        int prev = FindGreateSumOfSubArray_2(pData, nLength, j - 1);
+//        if (prev < 0) {
+//            return std::max(prev,pData[j]);
+//        }
+//        int sum = prev + pData[j];
+//        if (j == nLength - 1)
+//            return pData[j] > 0 ? sum : prev;        
+//        return std::max(sum, pData[j]);
+//    }
+//    
+//}
+int FindGreateSumOfSubArray_2(int* pData, int nLength, int i) {
+    if ((pData == nullptr) || (nLength <= 0))
+    {
+        g_InvalidInput = true;
+        return 0;
+    }
+    if (i == 0) {
+        return pData[0];
+    }
+    int prev = FindGreateSumOfSubArray_2(pData, nLength, i - 1);
+    if (prev < 0) {
+        return std::max(pData[i],prev);
+    }
+    if (pData[i] < 0 && i == nLength - 1)
+        return prev;
+    else
+        return std::max(prev + pData[i], pData[i]);
+
+}
 int FindGreatestSumOfSubArray(int *pData, int nLength)
 {
     if((pData == nullptr) || (nLength <= 0))
@@ -57,6 +98,13 @@ void Test(char* testName, int* pData, int nLength, int expected, bool expectedFl
         printf("Passed.\n");
     else
         printf("Failed.\n");
+
+    int result2 = FindGreateSumOfSubArray_2(pData, nLength, nLength-1);
+    if (result2 == expected && expectedFlag == g_InvalidInput)
+        printf("method2 Passed.\n");
+    else
+        printf("method2 Failed.\n");
+
 }
 
 // 1, -2, 3, 10, -4, 7, 2, -5

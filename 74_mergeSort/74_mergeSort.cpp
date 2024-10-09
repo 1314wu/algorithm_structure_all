@@ -1,67 +1,97 @@
 ﻿#include <stdio.h>
 #include <malloc.h>
+#include <string.h>
 int min(int x, int y) {
 	return x < y ? x : y;
 }
-void merge_sort_1(int arr[], int len) {
-	int *a = arr;
-	int *b = (int *)malloc(len * sizeof(int));
-	int seg, start;
-	for (seg = 1; seg < len; seg += seg) {
-		for (start = 0; start < len; start += seg * 2) {
-			int low = start, mid = min(start + seg, len), high = min(start + seg * 2, len);
-			int k = low;
+void merge(int R[], int T[], int low, int mid, int high) {
+	//将两个有序表R[low..mid] 和R[mid..high]归并为有序表 T[low...high]
+	int i, j, k;
+	i = low; j = mid + 1; k = low;
+	while (i <= mid && j <= high) {
+		if (R[i] > R[j])
+			T[k++] = R[j++];
+		else
+			T[k++] = R[i++];
+	}
+	while (i <= mid) //将剩余的R[low..mid]的放入T[]中
+		T[k++] = R[i++];	
+	while (j <= high) //将剩余的R[mid+1..high]放入T[]中
+		T[k++] = R[j++];
+	for (int t = low; t <= high; t++)
+		R[t] = T[t];	
+}
+//归并排序 (1)递归实现
+void Msort(int R[], int T[], int low, int high) {
+	 //将R[low..high]归并排序好后放入T[low..high]中
+	//printf("low:%d high:%d\n", low, high);
+	if (low == high) {
+		//T[low] = R[low];
+		return;
+	} else{
+		int mid;
+		mid = (low + high) / 2;
+		Msort(R, T, low, mid);
+		Msort(R, T, mid + 1, high);
+		merge(R, T, low, mid, high);
+	}
+}
+void MergeSort(int R[], int len) {
+	int* T = (int*)malloc(len * sizeof(int));
+	Msort(R, T, 0, len - 1);
+	free(T);
+}
+void merge_sort_nonrecv(int input[], int len) {
+	int* R = input;
+	int* out = (int*)malloc(len * sizeof(int));
+	int* T = out;
+	int step, low, mid, high,start,k;
+	for (step = 1; step < len; step += step) {
+		for (start = 0; start < len; start += step*2) {
+			low = start, mid = min(start + step, len), high = min(start + step * 2, len);
+			k = low;
 			int start1 = low, end1 = mid;
 			int start2 = mid, end2 = high;
 			while (start1 < end1 && start2 < end2)
-				b[k++] = a[start1] < a[start2] ? a[start1++] : a[start2++];
+				T[k++] = R[start1] > R[start2] ? R[start2++] : R[start1++];
 			while (start1 < end1)
-				b[k++] = a[start1++];
+				T[k++] = R[start1++];			
 			while (start2 < end2)
-				b[k++] = a[start2++];
+				T[k++] = R[start2++];
 		}
-		int *temp = a;
-		a = b;
-		b = temp;
+		int *temp_list = T;
+		T = R;
+		R = temp_list;
 	}
-	if (a != arr) {
+	if ( R != input) {
 		int i;
-		for (i = 0; i < len; i++)
-			b[i] = a[i];
-		b = a;
+		for (i = 0; i < len; i++) {
+			T[i] = R[i];
+		}			
+		T = R;
 	}
-	free(b);
-}
-void merge_sort_recursive(int arr[], int reg[], int start, int end) {
-	if (start >= end)
-		return;
-	int len = end - start, mid = (len >> 1) + start;
-	int start1 = start, end1 = mid;
-	int start2 = mid + 1, end2 = end;
-	merge_sort_recursive(arr, reg, start1, end1);
-	merge_sort_recursive(arr, reg, start2, end2);
-	int k = start;
-	while (start1 <= end1 && start2 <= end2)
-		reg[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
-	while (start1 <= end1)
-		reg[k++] = arr[start1++];
-	while (start2 <= end2)
-		reg[k++] = arr[start2++];
-	for (k = start; k <= end; k++)
-		arr[k] = reg[k];
+	free(T);
 }
 
-void merge_sort_2(int arr[], const int len) {
-	int *reg = (int*)malloc(sizeof(int)*len);
-	merge_sort_recursive(arr, reg, 0, len - 1);
+void output_info(int* arr, int len) {
+	int i;
+	for (i = 0; i < len; i++)
+		printf("%d ", arr[i]);
+	printf("\n");
 }
 int main() {
 	int arr[] = { 22, 34, 3, 32, 82, 55, 89, 50, 37, 5, 64, 35, 9, 70 };
 	int len = (int) sizeof(arr) / sizeof(*arr);
-	merge_sort_1(arr, len);
-	merge_sort_2(arr, len);
-	int i;
-	for (i = 0; i < len; i++)
-		printf("%d ", arr[i]);
+	
+	int* input_list = (int*)malloc(sizeof(int) * len);
+	memcpy(input_list, arr, sizeof(int) * len);
+	merge_sort_nonrecv(input_list, len);
+	output_info(input_list, len);
+	
+	memcpy(input_list, arr, sizeof(int) * len);
+	MergeSort(input_list,len);
+	output_info(input_list, len);
+	
+	free(input_list);
 	return 0;
 }
