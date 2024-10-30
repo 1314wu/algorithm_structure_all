@@ -52,7 +52,7 @@ void quick_sort_1(int arr[], const int len) {
 int partition(int arr[], int low, int high) {
 	int key_value = arr[low];
 	while (low < high) {
-		while (low < high && arr[high] > key_value)
+		while (low < high && arr[high] >= key_value)
 			high--;
 		if (low < high)
 			arr[low] = arr[high];
@@ -80,7 +80,9 @@ void output_info(int const* input_list, int len) {
 	printf("\n");
 }
 int main() {
-	int arr[] = { 22, 34, 3, 32, 82, 55, 89,45, 50, 37, 5, 64, 35, 9, 70 };
+//	int arr[] = { 22, 34, 3, 32, 82, 55, 89,45, 50, 37, 5, 64, 35, 9, 70 };
+	int arr[] = { 4,5,4 };
+	//int arr[] = { 3,2,3 };
 	int len = (int) sizeof(arr) / sizeof(*arr);
 	int* input_list = new int[len];
 	memcpy(input_list, arr, sizeof(int) * len);
